@@ -3,31 +3,142 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --glow-primary-md: conic-gradient(from 90deg at 50% 50%,
+      #059669 0deg,
+      #059669 160deg,
+      #059669 360deg);
+
+  --glow-secondary-md: conic-gradient(from 10deg at 50% 50%,
+      #059669 0deg,
+      #059669 100deg,
+      #b94bb0 180deg,
+      #070707 250deg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.glow-form::before,
+.glow-form::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  opacity: .2;
+}
+
+.glow-form::before {
+  top: 350px;
+  left: 450px;
+  background: var(--glow-primary-md);
+  border-radius: 50%;
+  width: 350px;
+  height: 200px;
+}
+
+.glow-form::after {
+  top: 35%;
+  left: 70px;
+  background: var(--glow-secondary-md);
+  border-radius: 50%;
+  width: 350px;
+  height: 450px;
+  /* animation: animateAfter 7s cubic-bezier(0.47, 0, 0.745, 0.715) infinite; */
+}
+
+.bg-blur {
+  background-color: rgba(7, 7, 7, .2);
+  backdrop-filter: blur(70px);
+}
+
+.glass {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.glass-border {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-border-light {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-shadow {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 7px;
+}
+
+.glass-gradient {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .20) 50%, rgba(200, 200, 200, .075) 100%);
+  /* background-size: 140%; */
+}
+.glass-gradient-plan {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .20) 50%, rgba(200, 200, 200, .075) 70%);
+  /* background-size: 140%; */
+}
+
+.glass-bg-1 {
+  background: rgba(5, 150, 105, 0.2);
+}
+
+.glass-bg-2 {
+  background: rgba(5, 150, 105, 0.1);
+}
+
+.glass-bg-3 {
+  background: rgba(5, 150, 105, 0.05);
+}
+
+.glass-bg-4 {
+  background: rgba(29, 78, 216, 0);
+}
+
+/* body {
+  background-image: url("../public/images/pexels-ivaoo-691710.jpg");
+} */
+
+.noise {
+  background-color: #050509;
+  background-image: url("/images/noisy-texture-200x200-o12-d100-c-050509-t0.png");
+}
+
+.separation-gradient {
+  background: radial-gradient(rgba(255, 255, 255, .7), rgba(0, 0, 0, 0) 50%);
+}
+
+.repeating-gradient {
+  background-image: repeating-linear-gradient(
+    135deg,           /* 45-degree angle for diagonal lines */
+    rgba(30, 30, 30, .1),       /* Line color */
+    rgba(30, 30, 30, .1) 10px,  /* Line thickness */
+    transparent 10px, /* Spacing between lines */
+    transparent 20px /* End of pattern repeat */
+  );
+  background-size: 100% 100%; /* Control the size of the pattern */
+}
+
+@keyframes animateBefore {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(200px) scale(0.8);
+
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+@keyframes animateAfter {
+  0% {
+    transform: translateX(0);
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  50% {
+    transform: translateX(-250px) scale(1.2);
+
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
