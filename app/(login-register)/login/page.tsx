@@ -9,8 +9,6 @@ import { MailAtSign01Icon, SquareLockPasswordIcon, ArrowRight03Icon, Alert01Icon
 function SubmitButton() {
   const status = useFormStatus();
 
-  console.log(status);
-
   return <button
     type="submit"
     aria-disabled={status.pending}
@@ -25,14 +23,6 @@ export default function Form() {
     message: "",
     errors: []
   });
-
-  // TO DO:
-  // accessibility, responsivity
-  // show error messages on form submition fail
-  // form animation on redirect
-  // darken right section image, also try to add gradient
-
-  console.log(state)
 
   const emailError = getError("email", state.errors);
   const passwordError = getError("password", state.errors);

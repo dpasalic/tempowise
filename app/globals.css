@@ -113,6 +113,10 @@
   background-size: 100% 100%; /* Control the size of the pattern */
 }
 
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: none;
+}
+
 @keyframes animateBefore {
   0% {
     transform: translateY(0);
@@ -141,4 +145,44 @@
   100% {
     transform: translateX(0);
   }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  } 100% {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 150ms ease-in-out;
+}
+
+@keyframes drop-in {
+  0% {
+    transform: translateY(-35px);
+  } 50% {
+    transform: translateY(0);
+  }
+}
+
+.animate-drop-in {
+  animation: drop-in 200ms ease-out;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  } 100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1000ms linear infinite;
+}
+
+.expand:hover {
+  background-color: red;
+  height: max-content !important;
 }

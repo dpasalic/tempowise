@@ -12,7 +12,7 @@ type FormState = {
   errors: any[]
 };
 
-export default async function login(formState: FormState, formData: FormData) {
+export default async function login(previousState: FormState, formData: FormData) {
   const session = await getSession();
   let user;
 

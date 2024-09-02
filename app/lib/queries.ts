@@ -33,12 +33,24 @@ export async function getTasksOfUser(userId: string) {
           ) ORDER BY start_minutes
         ) AS tasks
       FROM tasks
-      WHERE user_id = ${userId}
+      WHERE user_id = $1
       GROUP BY day_of_week
     )
     SELECT json_object_agg(day_of_week, tasks) AS tasks
     FROM task_aggregation;
-  `);
+  `, [userId]);
 
   return rows;
+}
+
+export async function insertTask(userId: string, title: string, desc: string, startMinutes: number, durationMinutes: number, day: string) {
+  await pool.query(`
+    INSERT INTO tasks (user_id, title, description, start_minutes, duration_minutes, day_of_week)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *;
+  `, [userId, title, desc, startMinutes, durationMinutes, day]);
+}
+
+export async function deleteTask(id: number) {
+  await pool.query("DELETE FROM tasks WHERE id=$1 RETURNING *", [id]);
 }

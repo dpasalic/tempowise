@@ -4,7 +4,7 @@ export default function PlanLayout({
   children: React.ReactNode
 }>) {
   return (
-    <main className="px-24 py-32">
+    <main className="px-24 pt-12 pb-32">
       {children}
     </main>
   );

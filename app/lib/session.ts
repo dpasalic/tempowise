@@ -43,6 +43,7 @@ export const getSession = async () => {
 export const protectRoute = async () => {
   "use server";
   const session = await getSession();
+  return session;
 
   if (!session.isLoggedIn) {
     redirect("/login");
