@@ -182,7 +182,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   animation: spin 1000ms linear infinite;
 }
 
+.expand {
+  height: auto;
+  transition: height 150ms ease-in-out;
+}
 .expand:hover {
-  background-color: red;
+  background-color: rgba(30, 70, 30, 1);
+  border: 1px solid #fff;
   height: max-content !important;
 }

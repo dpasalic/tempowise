@@ -69,5 +69,5 @@ export default async function login(previousState: FormState, formData: FormData
   session.isLoggedIn = true;
 
   await session.save();
-  redirect("/plan");
+  redirect(`/plan?id=${user.id}`);
 };

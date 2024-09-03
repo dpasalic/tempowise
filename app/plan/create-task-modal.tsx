@@ -3,7 +3,7 @@ import { useFormStatus, useFormState } from "react-dom";
 import Link from "next/link";
 import createTask from "@/app/actions/create-task";
 import { getError, convertMinutesToHM } from "@/app/lib/helpers";
-import { MailAtSign01Icon, Time02Icon, TimeHalfPassIcon, ArrowRight03Icon, Alert01Icon, SubtitleIcon, TextIndentIcon } from "@/public/icons";
+import { PlusSignSquareIcon, Time02Icon, TimeHalfPassIcon, ArrowRight03Icon, Alert01Icon, SubtitleIcon, TextIndentIcon, Cancel02Icon } from "@/public/icons";
 
 function SubmitButton() {
   const status = useFormStatus();
@@ -13,7 +13,7 @@ function SubmitButton() {
     aria-disabled={status.pending}
     aria-label={status.pending ? "Loading" : ""}
     className="p-1 mt-2 rounded-sm bg-emerald-600">
-    {status.pending ? "Loading..." : <span className="flex justify-center gap-2"><ArrowRight03Icon />Start organizing</span>}
+    {status.pending ? "Loading..." : <span className="flex justify-center items-center gap-2"><PlusSignSquareIcon width={20} height={20} />Add to plan</span>}
   </button>
 }
 
@@ -53,8 +53,11 @@ export default function Modal({ handleClose, startMinutes, durationMinutes, size
       <div
         onClick={handleModalBodyClick}
         className="w-96 p-8 rounded-sm border border-zinc-500 bg-[#070707] animate-drop-in">
-        <h3 className="text-2xl font-bold">Create Task</h3>
-        <p>{`${convertMinutesToHM(startMinutes)} - ${convertMinutesToHM(durationMinutes)}`}</p>
+        <div className="flex justify-between">
+          <h3 className="text-2xl font-bold">Create Task</h3>
+          <button onClick={handleClose}><Cancel02Icon /></button>
+        </div>
+        <p>{day}, {`${convertMinutesToHM(startMinutes)} - ${convertMinutesToHM(durationMinutes)}`}</p>
         <form action={action} noValidate className="flex flex-col gap-2 pt-2">
           <div className="relative flex flex-col">
             {
@@ -130,9 +133,6 @@ export default function Modal({ handleClose, startMinutes, durationMinutes, size
           <input type="hidden" name="hidden-day" value={day} />
           <SubmitButton />
         </form>
-        <div className="flex justify-center mt-4">
-          <button onClick={handleClose}>close</button>
-        </div>
       </div>
     </div>
   );

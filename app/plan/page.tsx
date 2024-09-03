@@ -1,14 +1,15 @@
 import { protectRoute } from "../lib/session";
 import getTasks from "../actions/get-tasks";
 import { convertMinutesToHM } from "../lib/helpers";
-import { PlusSignSquareIcon } from "@/public/icons";
+import { LeftToRightListNumberIcon } from "@/public/icons";
+import Nav from "./nav";
 import EmptySpace from "./empty-space";
 import Task from "./task";
 
-export default async function Plan() {
-  const user = await protectRoute();
+export default async function Plan({ params, searchParams }: { params: any, searchParams: any }) {
+  await protectRoute();
 
-  const tasks = await getTasks("995939064481251329");
+  const tasks = await getTasks(searchParams.id);
 
   const renderTasksForDay = (day: string) => {
     if (!tasks || !tasks[day]) {
@@ -31,7 +32,7 @@ export default async function Plan() {
         }
 
         // render task
-        renderArr.push(<Task task={task} />);
+        renderArr.push(<Task task={task} index={i} />);
 
         // render empty space after last task
         if (i === tasks[day].length - 1) {
@@ -53,9 +54,9 @@ export default async function Plan() {
   const renderDays = () => {
     return days.map(day => (
       <div key={day} className="flex-1">
-        <div className="sticky top-8 flex items-center gap-1 p-2 border-b border-zinc-900 bg-[#070707] z-10">
-          <PlusSignSquareIcon width={16} height={16} />
-          <p className="text-sm">04:35</p>
+        <div className="sticky top-8 flex items-center gap-2 p-2 border-b border-zinc-900 bg-[#070707] z-[46]">
+          <LeftToRightListNumberIcon width={16} height={16} />
+          <p className="text-sm">{tasks ? tasks[day]?.length || 0 : 0}</p>
         </div>
         <div className="flex flex-col gap-0 h-[1440px] p-1">
           {renderTasksForDay(day)}
@@ -68,7 +69,7 @@ export default async function Plan() {
     let marksArr = [];
     for (let i = 0; i < 24; i++) {
       marksArr.push(<div key={i} className="relative w-full h-px bg-[rgba(40,40,40,.2)]">
-        <div className="absolute top-[-17px] left-[-5px]">
+        <div className="absolute top-[-17px] left-0">
           <span className="text-xl font-black">{`${i < 10 ? "0" + i : i}`}</span>
           <span className="text-sm">:00</span>
         </div>
@@ -79,17 +80,19 @@ export default async function Plan() {
   };
 
   return (
-    <div className="relative pl-14">
-      <div className="pb-12 text-4xl font-black">{user.first_name} {user.last_name}</div>
-      <div className="absolute top-0 left-0 flex flex-col justify-between w-full h-full pt-[170px] pb-[69px]">
-        {renderHourMarks()}
-      </div>
-      <div className="sticky top-0 grid grid-cols-7 p-1 bg-[#070707] z-10">{renderDayNames()}</div>
-      <div className="relative border border-zinc-900 p-1">
-        <div className="grid grid-cols-7 border border-zinc-700 rounded-sm">
-          {renderDays()}
+    <>
+      <Nav />
+      <div className="relative pl-14 mt-36">
+        <div className="absolute top-0 left-0 flex flex-col justify-between w-full h-full pt-[82px] pb-[69px]">
+          {renderHourMarks()}
+        </div>
+        <div className="sticky top-0 grid grid-cols-7 p-1 bg-[#070707] z-[46]">{renderDayNames()}</div>
+        <div className="relative border border-zinc-900 p-1">
+          <div className="grid grid-cols-7 border border-zinc-700 rounded-sm">
+            {renderDays()}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
