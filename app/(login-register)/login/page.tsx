@@ -43,6 +43,7 @@ export default function Form() {
             type="email"
             id="email"
             name="email"
+            autoFocus
             placeholder="mujo@example.com"
             aria-describedby="email-error"
             aria-invalid={emailError}

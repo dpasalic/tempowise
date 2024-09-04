@@ -49,6 +49,7 @@ export default function Form() {
             type="text"
             id="first-name"
             name="first-name"
+            autoFocus
             placeholder="Mujo"
             aria-describedby="first-name-error"
             aria-invalid={firstNameError}

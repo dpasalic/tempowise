@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useFormStatus, useFormState } from "react-dom";
-import Link from "next/link";
 import editUser from "../actions/edit-user";
+import deleteUserAndSession from "../actions/delete-user-and-session";
 import { getError, convertMinutesToHM } from "@/app/lib/helpers";
-import { MailAtSign01Icon, Time02Icon, UserIcon, Edit02Icon, Alert01Icon, SquareLockPasswordIcon, Cancel02Icon } from "@/public/icons";
+import { MailAtSign01Icon, Delete02Icon, UserIcon, Edit02Icon, Alert01Icon, SquareLockPasswordIcon, Cancel02Icon } from "@/public/icons";
 
 function SubmitButton() {
   const status = useFormStatus();
@@ -23,6 +23,7 @@ interface ModalProps {
 }
 
 export default function Modal({ handleClose, user }: ModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [state, action] = useFormState(editUser, {
     message: "",
     errors: []
@@ -41,6 +42,11 @@ export default function Modal({ handleClose, user }: ModalProps) {
 
   const handleModalBodyClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
+  };
+
+  const handleDelete = async (id: number) => {
+    setIsLoading(true);
+    await deleteUserAndSession(id);
   };
 
   const { userId, first_name, last_name, email } = user;
@@ -136,6 +142,11 @@ export default function Modal({ handleClose, user }: ModalProps) {
           <input type="hidden" name="hidden-id" value={userId} />
           <SubmitButton />
         </form>
+        <button
+          onClick={() => handleDelete(userId)}
+          className="w-full p-1 mt-2 rounded-sm bg-red-600">
+          {isLoading ? "Loading..." : <span className="flex justify-center items-center gap-2"><Delete02Icon width={18} height={18} />Delete profile</span>}
+        </button>
       </div>
     </div>
   );
