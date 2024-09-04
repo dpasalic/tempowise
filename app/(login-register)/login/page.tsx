@@ -72,7 +72,7 @@ export default function Form() {
       <div role="alert" className="p-2 pb-1 text-center text-sm text-rose-800">
         {state.message === "fail" && !emailError && !passwordError ? state.errors[0].message : null}
       </div>
-      <div className="flex justify-center gap-1 pt-4 text-xs">Don't have an account?<Link href="/register" className="underline">Register here!</Link></div>
+      <div className="flex justify-center gap-1 pt-4 text-xs">Do not have an account?<Link href="/register" className="underline">Register here!</Link></div>
     </div>
   );
 }
