@@ -9,13 +9,13 @@ export default function LoginSignup({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="grid grid-cols-2 min-h-screen">
+    <main className="grid lg:grid-cols-2 min-h-screen">
       <section className="">
         <div className="relative flex justify-center items-center h-full p-6">
           {children} {/* form */}
         </div>
       </section>
-      <section className="relative">
+      <section className="relative hidden lg:block">
         <div className="h-full">
           <Image
             src={rightSectionImg}

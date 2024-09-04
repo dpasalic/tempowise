@@ -7,7 +7,7 @@ import EmptySpace from "./empty-space";
 import Task from "./task";
 
 export default async function Plan({ params, searchParams }: { params: any, searchParams: any }) {
-  await protectRoute();
+  const user = await protectRoute(searchParams.id);
 
   const tasks = await getTasks(searchParams.id);
 
@@ -81,8 +81,8 @@ export default async function Plan({ params, searchParams }: { params: any, sear
 
   return (
     <>
-      <Nav />
-      <div className="relative pl-14 mt-36">
+      <Nav user={user} />
+      <div className="relative pl-14 mt-36 min-w-[1440px]">
         <div className="absolute top-0 left-0 flex flex-col justify-between w-full h-full pt-[82px] pb-[69px]">
           {renderHourMarks()}
         </div>

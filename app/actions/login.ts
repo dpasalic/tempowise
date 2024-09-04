@@ -65,6 +65,7 @@ export default async function login(previousState: FormState, formData: FormData
   session.userId = user.id;
   session.first_name = user.first_name;
   session.last_name = user.last_name;
+  session.email = user.email;
   session.role = user.role;
   session.isLoggedIn = true;
 

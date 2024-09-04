@@ -7,6 +7,7 @@ export interface Session {
   userId?: string,
   first_name?: string,
   last_name?: string,
+  email?: string,
   role?: string,
   isLoggedIn: boolean
 }
@@ -32,6 +33,9 @@ export const getSession = async () => {
     session.isLoggedIn = false;
   } else if (session.userId) {
     const res = await findUserById(session.userId);
+    session.first_name = res.first_name;
+    session.last_name = res.last_name;
+    session.email = res.email;
     if (!res) {
       session.isLoggedIn = false;
     }
@@ -40,11 +44,32 @@ export const getSession = async () => {
   return session;
 };
 
-export const protectRoute = async () => {
+export const protectRoute = async (searchedId: string) => {
   "use server";
   const session = await getSession();
 
   if (!session.isLoggedIn) {
     redirect("/login");
   }
+
+  if (searchedId != session.userId) {
+    redirect("/error?code=403");
+  }
+
+  return session;
 }
+
+export const protectAdminRoute = async () => {
+  "use server";
+  const session = await getSession();
+
+  if (!session.isLoggedIn) {
+    redirect("/login");
+  }
+
+  if (session.role !== "admin") {
+    redirect("/error?code=403");
+  }
+
+  return session;
+};
